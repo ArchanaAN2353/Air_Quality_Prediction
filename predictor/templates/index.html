@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Air Quality Prediction</title>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to top, #4b1c91, #9c27b0);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 40px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 500px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0,0,0,0.4);
+            color: white;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 30px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            background: white;
+            color: #6a1b9a;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .logout-btn {
+            align-self: flex-end;
+            padding: 6px 12px;
+            border-radius: 12px;
+            border: none;
+            background: #ffffffaa;
+            color: #6a1b9a;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            background: rgba(255, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Air Quality Prediction</h2>
+
+    <!-- Logout Button -->
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
+
+    <!-- 🔴 Display Django Messages (Validation Errors) -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="error-message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Prediction Form -->
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <label>CO</label>
+            <input type="number" step="any" min="0" name="co" required>
+        </div>
+
+        <div class="input-group">
+            <label>NO2</label>
+            <input type="number" step="any" min="0" name="no2" required>
+        </div>
+
+        <div class="input-group">
+            <label>SO2</label>
+            <input type="number" step="any" min="0" name="so2" required>
+        </div>
+
+        <div class="input-group">
+            <label>O3</label>
+            <input type="number" step="any" min="0" name="o3" required>
+        </div>
+
+        <div class="input-group">
+            <label>PM2.5</label>
+            <input type="number" step="any" min="0" name="pm25" required>
+        </div>
+
+        <div class="input-group">
+            <label>PM10</label>
+            <input type="number" step="any" min="0" name="pm10" required>
+        </div>
+
+        <button type="submit" class="btn">Predict</button>
+    </form>
+</div>
+
+</body>
+</html>

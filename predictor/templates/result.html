@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Air Quality Result</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to top, #4b1c91, #9c27b0);
+            display: flex;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+
+        .container {
+            width: 1000px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* Layout */
+        .result-layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        .left-section {
+            flex: 1;
+        }
+
+        .right-section {
+            flex: 1;
+        }
+
+        /* Prediction Box */
+        .prediction {
+            font-size: 30px;
+            font-weight: bold;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .confidence {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .explanation-box {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        canvas {
+            width: 100%;
+            height: 350px !important;
+            border-radius: 15px;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .back-btn {
+            display: block;
+            width: 200px;
+            margin: 40px auto 0;
+            padding: 12px;
+            border-radius: 30px;
+            border: none;
+            background: white;
+            color: #6a1b9a;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Air Quality Prediction Result</h1>
+
+    <div class="result-layout">
+
+        <!-- LEFT SIDE -->
+        <div class="left-section">
+
+            <div class="prediction">
+                {{ prediction }}
+            </div>
+
+            <div class="confidence">
+                Confidence: <strong>{{ confidence }}%</strong>
+            </div>
+
+            <div class="explanation-box">
+                {{ explanation }}
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right-section">
+            <canvas id="airChart"></canvas>
+        </div>
+
+    </div>
+
+    <a href="{% url 'predict' %}" class="back-btn">Back to Input</a>
+
+</div>
+
+<script>
+const pollutantValues = [
+    {{ co }},
+    {{ no2 }},
+    {{ so2 }},
+    {{ o3 }},
+    {{ pm25 }},
+    {{ pm10 }}
+];
+
+const barColors = pollutantValues.map(v => 
+    v > 50 ? 'rgba(255,0,0,0.7)' : 'rgba(0,150,255,0.7)'
+);
+
+const borderColors = pollutantValues.map(v => 
+    v > 50 ? 'rgba(255,0,0,1)' : 'rgba(0,150,255,1)'
+);
+
+const ctx = document.getElementById('airChart').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['CO', 'NO2', 'SO2', 'O3', 'PM2.5', 'PM10'],
+        datasets: [{
+            label: 'Pollutant Levels',
+            data: pollutantValues,
+            backgroundColor: barColors,
+            borderColor: borderColors,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        animation: {
+            duration: 1500,
+            easing: 'easeOutBounce'
+        },
+        plugins: {
+            legend: {
+                labels: { color: 'white' }
+            }
+        },
+        scales: {
+            x: { 
+                ticks: { color: 'white', font: { size: 14 } } 
+            },
+            y: { 
+                ticks: { color: 'white', font: { size: 14 } },
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+
+</body>
+</html>

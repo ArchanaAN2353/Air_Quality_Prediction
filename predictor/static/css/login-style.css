@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    width: 380px;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    color: white;
+    text-align: center;
+}
+
+.box h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.input-container {
+    position: relative;
+    margin: 20px 0;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 12px 10px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #fff;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+}
+
+.input-container label {
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    pointer-events: none;
+    transition: 0.3s;
+}
+
+.input-container input:focus ~ label,
+.input-container input:valid ~ label {
+    top: -10px;
+    font-size: 12px;
+    color: #00eaff;
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.remember-forgot a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    background: #fff;
+    color: #6a11cb;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #00eaff;
+    color: #000;
+}
+
+.register {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.register a {
+    color: #00eaff;
+    text-decoration: none;
+}
+
+.error {
+    margin-top: 10px;
+    color: #ffb3b3;
+    font-size: 14px;
+}
